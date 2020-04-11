@@ -88,7 +88,10 @@ public class NoOfFlip {
          }
           
           System.out.println(""+max_i+ " "+max_j);
-          return null;
+          ArrayList<Integer> ret = new ArrayList<Integer>();
+          ret.add(max_i);
+          ret.add(max_j);
+          return ret;
          }
         
          
@@ -97,14 +100,58 @@ public class NoOfFlip {
      // Using kadane's algorithm
      
      public static ArrayList<Integer> flip_kadane(String A)
-             
      {
          
+        int len = A.length();
+        int start=0,end=0,curr_start=0,curr_end=0;
+        int diff=0,curr_diff=0;        
+        boolean flag=false;
+        
+        
+        
+        for(int i=0;i<len;i++)
+        {
+            if(A.charAt(i)=='0')
+            {
+                flag=true;
+                curr_diff++;
+                curr_end = i;
+                
+            }
+            else
+            {
+                curr_diff--;
+            }
+            
+            if(curr_diff > diff)
+            {
+                diff = curr_diff;
+                start = curr_start;
+                end= curr_end;
+                
+            }
+            
+            else if (curr_diff < 0)
+            {
+                curr_diff=0;
+                curr_start=i+1;
+                curr_end=i+1;
+                
+            }
+        }
+         //System.out.println(""+l+ " "+r);
+         ArrayList<Integer> ret = new ArrayList<Integer>();
+         if(flag==false)
+             return ret;
+         ret.add(start+1);
+         ret.add(end+1);
+         return ret;
      }
+     
     public static void main(String[] args) {
         
-        flip("010");
-        
+        //flip("010");
+        System.out.println(flip_kadane("1101"));
     }
     
 }
